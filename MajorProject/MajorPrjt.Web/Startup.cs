@@ -1,6 +1,10 @@
+using MajorPrjt.Web.Data;
+using MajorPrjt.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +27,22 @@ namespace MajorPrjt.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>((options) =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("MyDefaultConnectionString"));
+            });
+
+            // Register the OWIN Identity Middleware
+            // to use the default IdentityUser and IdentityRole profiles
+            // and store the data in the ApplicationDbContext
+
+            services
+                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //    services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            //.AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddRazorPages();
         }
 
@@ -45,11 +65,24 @@ namespace MajorPrjt.Web
 
             app.UseRouting();
 
+            // Activate the OWIN Middleware to use Authentication and Authorization Services.
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+
                 endpoints.MapRazorPages();
+
+                // Register the Routes for Areas
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area}/{controller=Home}/{action=Index}/{id?}");
+
+                // Register the Routes for the MVC Controllers
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
