@@ -1,0 +1,72 @@
+﻿@using MajorPrjt.Web.Areas.User.ViewModels
+@model UserForumViewModel
+
+<link href='https://fonts.googleapis.com/css?family=Yesteryear' rel='stylesheet'>
+@{
+}
+
+<h1>Search Your Questions</h1>
+
+<div  class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Get items</button>
+        </form>
+    </div>
+</div>
+
+
+@if(Model != null && Model.Topics != null)
+{
+    <form method="post">
+        <div class="card-columns mt-3">
+            @foreach(var item in Model.Topics) 
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title font-weight-bolder"> @item.Title </div>
+                        <div class="card-text text-danger font-weight-bolder">  @item.PostDateTime</div>
+                        <div class="card-text font-italic"> @item.Description </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-success " type="submit"
+                                asp-area="Menu" asp-controller="Home" 
+                                asp-action="AddToCart" asp-route-id="@item.TopicId">
+                            Add to Cart
+                        </button>
+                        <button class="btn btn-sm btn-primary " style="width:100px; height:32px" ><a class="text-light" asp-area="Manage" asp-controller="OrderDetails" asp-action="Create">Order Now</a>
+                        </button>
+                        <button class="btn btn-sm btn-danger" type="submit">Cancel</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </form>
+}
+
+
+
+@section MyView {
+    <style>
+        h1 {
+            color: #F1F114;
+            text-align: center;
+            font-family: 'Yesteryear';
+            font-size: 2.5rem;
+            /*font-weight: bold;*/
+        }
+        #tagg{
+            text-align: center;
+        }
+    </style>
+}
+
+
+
