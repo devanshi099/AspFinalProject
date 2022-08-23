@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MajorPrjt.Web.Areas.DForum.Controllers
 {
-    [Area("DForum")]
     [Authorize]
+    [Area("DForum")]
     public class RepliesController : Controller
     {
         private readonly ApplicationDbContext _context;

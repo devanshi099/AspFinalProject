@@ -15,6 +15,7 @@ namespace MajorPrjt.Web.Models
 
 
         [Required(ErrorMessage = "{0} cannot be empty")]
+        [Display(Name = "Reply")]
         public string ReplyDescription { get; set; }
 
 

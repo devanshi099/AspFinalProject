@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.PostDateTime)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -41,6 +44,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PostDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TopicId">Edit</a> |

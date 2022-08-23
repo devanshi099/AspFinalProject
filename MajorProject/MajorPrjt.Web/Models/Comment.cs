@@ -16,6 +16,7 @@ namespace MajorPrjt.Web.Models
 
 
         [Required(ErrorMessage = "{0} cannot be empty")]
+        [Display(Name = "Comment")]
         public string CommentDescription { get; set; }
 
 

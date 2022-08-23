@@ -23,11 +23,11 @@ namespace MajorPrjt.Web.Models
         [Required(ErrorMessage = "{0} cannot be empty")]
         [MaxLength(50, ErrorMessage = "{0} can contain a maximum of {1} characters")]
         [MinLength(2, ErrorMessage = "{0} should contain a minimum of {1} characters")]
-        [RegularExpression(@"^[a-zA-Z]+[ a-zA-Z-_]*$", ErrorMessage = "Numbers are not allowed. Please use only alphabets!!!")]
         public string Title { get; set; }
 
 
         [Required(ErrorMessage = "{0} cannot be empty")]
+        [Display(Name = "Question")]
         public string Description { get; set; }
 
 
@@ -44,6 +44,15 @@ namespace MajorPrjt.Web.Models
 
         #region Navigation Properties to Comment Model
         public ICollection<Comment> Comments { get; set; }
+        #endregion
+
+
+        #region Navigation Properties to Category Model
+        [Display(Name = "Select Category")]
+        public short CategoryId { get; set; }
+
+        [ForeignKey(nameof(Topic.CategoryId))]
+        public Category Category { get; set; }
         #endregion
 
         //public ApplicationUser ApplicationUser { get; set; }

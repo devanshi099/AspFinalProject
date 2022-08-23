@@ -24,6 +24,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Manage</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" 
+                                   asp-area="DForum" asp-controller="Categories" asp-action="Index">Categories</a>
+                                <a class="dropdown-item"
+                                   asp-area="DForum" asp-controller="Topics" asp-action="Index">Questions</a>
+                                <a class="dropdown-item"
+                                   asp-area="DForum" asp-controller="Comments" asp-action="Index">Comments</a>
+                                   <a class="dropdown-item"
+                                   asp-area="DForum" asp-controller="Replies" asp-action="Index">Replies</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

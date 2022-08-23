@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MajorPrjt.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220821140545_AddedIdentityContext")]
-    partial class AddedIdentityContext
+    [Migration("20220822140142_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,23 @@ namespace MajorPrjt.Web.Migrations
                 .HasAnnotation("ProductVersion", "3.1.28")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("MajorPrjt.Web.Models.Category", b =>
+                {
+                    b.Property<short>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("MajorPrjt.Web.Models.Comment", b =>
                 {
@@ -76,6 +93,9 @@ namespace MajorPrjt.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<short>("CategoryId")
+                        .HasColumnType("smallint");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -92,6 +112,8 @@ namespace MajorPrjt.Web.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("TopicId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Topics");
                 });
@@ -310,6 +332,15 @@ namespace MajorPrjt.Web.Migrations
                     b.HasOne("MajorPrjt.Web.Models.Comment", "Comment")
                         .WithMany("Replies")
                         .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MajorPrjt.Web.Models.Topic", b =>
+                {
+                    b.HasOne("MajorPrjt.Web.Models.Category", "Category")
+                        .WithMany("Topics")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -13,90 +13,85 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
 {
     [Authorize]
     [Area("DForum")]
-    public class TopicsController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public TopicsController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: DForum/Topics
+        // GET: DForum/Categories
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Topics.Include(t => t.Category);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Categories.ToListAsync());
         }
 
-        // GET: DForum/Topics/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: DForum/Categories/Details/5
+        public async Task<IActionResult> Details(short? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var topic = await _context.Topics
-                .Include(t => t.Category)
-                .FirstOrDefaultAsync(m => m.TopicId == id);
-            if (topic == null)
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(topic);
+            return View(category);
         }
 
-        // GET: DForum/Topics/Create
+        // GET: DForum/Categories/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
             return View();
         }
 
-        // POST: DForum/Topics/Create
+        // POST: DForum/Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TopicId,Title,Description,IsAnswered,PostDateTime,CategoryId")] Topic topic)
+        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(topic);
+                _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", topic.CategoryId);
-            return View(topic);
+            return View(category);
         }
 
-        // GET: DForum/Topics/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: DForum/Categories/Edit/5
+        public async Task<IActionResult> Edit(short? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var topic = await _context.Topics.FindAsync(id);
-            if (topic == null)
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", topic.CategoryId);
-            return View(topic);
+            return View(category);
         }
 
-        // POST: DForum/Topics/Edit/5
+        // POST: DForum/Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TopicId,Title,Description,IsAnswered,PostDateTime,CategoryId")] Topic topic)
+        public async Task<IActionResult> Edit(short id, [Bind("CategoryId,CategoryName")] Category category)
         {
-            if (id != topic.TopicId)
+            if (id != category.CategoryId)
             {
                 return NotFound();
             }
@@ -105,12 +100,12 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             {
                 try
                 {
-                    _context.Update(topic);
+                    _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TopicExists(topic.TopicId))
+                    if (!CategoryExists(category.CategoryId))
                     {
                         return NotFound();
                     }
@@ -121,43 +116,41 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", topic.CategoryId);
-            return View(topic);
+            return View(category);
         }
 
-        // GET: DForum/Topics/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: DForum/Categories/Delete/5
+        public async Task<IActionResult> Delete(short? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var topic = await _context.Topics
-                .Include(t => t.Category)
-                .FirstOrDefaultAsync(m => m.TopicId == id);
-            if (topic == null)
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(topic);
+            return View(category);
         }
 
-        // POST: DForum/Topics/Delete/5
+        // POST: DForum/Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(short id)
         {
-            var topic = await _context.Topics.FindAsync(id);
-            _context.Topics.Remove(topic);
+            var category = await _context.Categories.FindAsync(id);
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TopicExists(int id)
+        private bool CategoryExists(short id)
         {
-            return _context.Topics.Any(e => e.TopicId == id);
+            return _context.Categories.Any(e => e.CategoryId == id);
         }
     }
 }
