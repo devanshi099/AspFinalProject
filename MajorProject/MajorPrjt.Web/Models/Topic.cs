@@ -42,6 +42,10 @@ namespace MajorPrjt.Web.Models
         public DateTime PostDateTime { get; set; }
 
 
+        //[Display(Name = "Created By")]
+        //public string CreatedBy { get; set; }
+
+
         #region Navigation Properties to Comment Model
         public ICollection<Comment> Comments { get; set; }
         #endregion

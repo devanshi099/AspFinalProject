@@ -21,6 +21,10 @@ namespace MajorPrjt.Web.Models
 
 
 
+        //[Display(Name = "Commented By")]
+        //public string CommentedBy { get; set; }
+
+
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime CommentDateTime { get; set; }

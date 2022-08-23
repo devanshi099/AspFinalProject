@@ -62,6 +62,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TopicId,Title,Description,IsAnswered,PostDateTime,CategoryId")] Topic topic)
         {
+            
             if (ModelState.IsValid)
             {
                 _context.Add(topic);

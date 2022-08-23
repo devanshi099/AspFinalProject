@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<MajorPrjt.Web.Models.Comment>
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Index";
 }
@@ -21,7 +24,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.Topic)
             </th>
-            <th></th>
+            <th>@Html.DisplayName("Navigation Link's")</th>
+            <th>@Html.DisplayName("Created By")</th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +44,13 @@
                 <a asp-action="Edit" asp-route-id="@item.CommentId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.CommentId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.CommentId">Delete</a>
+            </td>
+            <td>
+                    @*@if (User.Identity.IsAuthenticated)
+                    {
+                        <div>@User.Identity.Name</div>
+                    }*@
+                    
             </td>
         </tr>
 }

@@ -45,7 +45,8 @@ namespace MajorPrjt.Web.Areas.User.Controllers
             return View("Index", model);
         }
 
-        
+
+
         public IActionResult CustomerView()
         {
 

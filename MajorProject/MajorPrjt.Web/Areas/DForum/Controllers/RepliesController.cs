@@ -51,7 +51,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // GET: DForum/Replies/Create
         public IActionResult Create()
         {
-            ViewData["CommentId"] = new SelectList(_context.Comments, "CommentId", "CommentDescription");
+            ViewData["CommentId"] = new SelectList(_context.Comments, "CommentId", "CommentDescription","RepliedBy");
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReplyId,ReplyDescription,ReplyDateTime,CommentId")] Reply reply)
+        public async Task<IActionResult> Create([Bind("ReplyId,ReplyDescription,ReplyDateTime,CommentId", "RepliedBy")] Reply reply)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CommentId"] = new SelectList(_context.Comments, "CommentId", "CommentDescription", reply.CommentId);
+            ViewData["CommentId"] = new SelectList(_context.Comments, "CommentId", "CommentDescription", reply.CommentId, "RepliedBy");
             return View(reply);
         }
 
@@ -85,7 +85,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             {
                 return NotFound();
             }
-            ViewData["CommentId"] = new SelectList(_context.Comments, "CommentId", "CommentDescription", reply.CommentId);
+            ViewData["CommentId"] = new SelectList(_context.Comments, "CommentId", "CommentDescription", reply.CommentId, "RepliedBy");
             return View(reply);
         }
 
@@ -94,7 +94,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReplyId,ReplyDescription,ReplyDateTime,CommentId")] Reply reply)
+        public async Task<IActionResult> Edit(int id, [Bind("ReplyId,ReplyDescription,ReplyDateTime,CommentId,RepliedBy")] Reply reply)
         {
             if (id != reply.ReplyId)
             {
@@ -121,7 +121,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CommentId"] = new SelectList(_context.Comments, "CommentId", "CommentDescription", reply.CommentId);
+            ViewData["CommentId"] = new SelectList(_context.Comments, "CommentId", "CommentDescription", reply.CommentId, "RepliedBy");
             return View(reply);
         }
 

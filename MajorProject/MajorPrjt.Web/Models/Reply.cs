@@ -25,6 +25,9 @@ namespace MajorPrjt.Web.Models
         public DateTime ReplyDateTime { get; set; }
 
 
+        [Display(Name = "Replied By")]
+        public string RepliedBy { get; set; }
+
 
         #region Navigation Properties to Comment Model
         [Display(Name = "Comment")]
