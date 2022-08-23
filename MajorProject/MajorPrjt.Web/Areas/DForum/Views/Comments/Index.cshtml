@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.Topic)
             </th>
             <th>@Html.DisplayName("Navigation Link's")</th>
-            <th>@Html.DisplayName("Created By")</th>
+            <th>@Html.DisplayName("Commented By")</th>
         </tr>
     </thead>
     <tbody>
@@ -51,7 +51,9 @@
                         <div>@User.Identity.Name</div>
                     }*@
                     
+                @Html.DisplayFor(modelItem => item.CommentedBy)
             </td>
+            
         </tr>
 }
     </tbody>

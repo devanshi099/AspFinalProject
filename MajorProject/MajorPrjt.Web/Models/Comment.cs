@@ -21,8 +21,8 @@ namespace MajorPrjt.Web.Models
 
 
 
-        //[Display(Name = "Commented By")]
-        //public string CommentedBy { get; set; }
+        [Display(Name = "Commented By")]
+        public string CommentedBy { get; set; }
 
 
         [Required]

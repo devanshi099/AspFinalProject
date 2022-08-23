@@ -60,7 +60,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TopicId,Title,Description,IsAnswered,PostDateTime,CategoryId")] Topic topic)
+        public async Task<IActionResult> Create([Bind("TopicId,Title,Description,IsAnswered,PostDateTime,CategoryId,CreatedBy")] Topic topic)
         {
             
             if (ModelState.IsValid)
@@ -69,7 +69,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", topic.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", topic.CategoryId, "CreatedBy");
             return View(topic);
         }
 
@@ -86,7 +86,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", topic.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", topic.CategoryId, "CreatedBy");
             return View(topic);
         }
 
@@ -95,7 +95,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TopicId,Title,Description,IsAnswered,PostDateTime,CategoryId")] Topic topic)
+        public async Task<IActionResult> Edit(int id, [Bind("TopicId,Title,Description,IsAnswered,PostDateTime,CategoryId,CreatedBy")] Topic topic)
         {
             if (id != topic.TopicId)
             {
@@ -122,7 +122,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", topic.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", topic.CategoryId, "CreatedBy");
             return View(topic);
         }
 

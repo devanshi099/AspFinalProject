@@ -60,7 +60,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommentId,CommentDescription,CommentDateTime,TopicId")] Comment comment)
+        public async Task<IActionResult> Create([Bind("CommentId,CommentDescription,CommentDateTime,TopicId", "CommentedBy")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Description", comment.TopicId);
+            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Description", comment.TopicId, "CommentedBy");
             return View(comment);
         }
 
@@ -85,7 +85,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             {
                 return NotFound();
             }
-            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Description", comment.TopicId);
+            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Description", comment.TopicId, "CommentedBy");
             return View(comment);
         }
 
@@ -94,7 +94,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CommentId,CommentDescription,CommentDateTime,TopicId")] Comment comment)
+        public async Task<IActionResult> Edit(int id, [Bind("CommentId,CommentDescription,CommentDateTime,TopicId,CommentedBy")] Comment comment)
         {
             if (id != comment.CommentId)
             {
@@ -121,7 +121,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Description", comment.TopicId);
+            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Description", comment.TopicId, "CommentedBy");
             return View(comment);
         }
 
