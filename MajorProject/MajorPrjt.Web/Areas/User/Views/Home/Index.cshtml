@@ -37,12 +37,9 @@
                         <div class="card-text font-italic"> @item.Comments </div>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-sm btn-success " type="submit"
-                                asp-area="Menu" asp-controller="Home" 
-                                asp-action="AddToCart" asp-route-id="@item.TopicId">
-                            Add to Cart
-                        </button>
-                        <button class="btn btn-sm btn-primary " style="width:100px; height:32px" ><a class="text-light" asp-area="Manage" asp-controller="OrderDetails" asp-action="Create">Order Now</a>
+                        <button class="btn btn-sm btn-primary " style="width:100px; height:32px" ><a class="text-light" asp-area="DForum" asp-controller="Comments" asp-action="Create">Comment</a>
+                            </button>
+                        <button class="btn btn-sm btn-primary " style="width:100px; height:32px" ><a class="text-light" asp-area="DForum" asp-controller="Replies" asp-action="Create">Reply</a>
                         </button>
                         <button class="btn btn-sm btn-danger" type="submit">Cancel</button>
                     </div>

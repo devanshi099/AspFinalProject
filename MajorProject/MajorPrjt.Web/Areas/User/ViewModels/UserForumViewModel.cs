@@ -13,6 +13,6 @@ namespace MajorPrjt.Web.Areas.User.ViewModels
 
         public ICollection<Topic> Topics { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
+        //public ICollection<Comment> Comments { get; set; }
     }
 }
