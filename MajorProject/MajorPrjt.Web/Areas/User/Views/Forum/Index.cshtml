@@ -1,11 +1,133 @@
-﻿@model IEnumerable<MajorPrjt.Web.Areas.User.ViewModels.CompleteForumView>
+﻿@*@model IEnumerable<MajorPrjt.Web.Areas.User.ViewModels.CompleteForumView>*@
+@using MajorPrjt.Web.Models;
+@model dynamic
 @{
     ViewBag.Title = "Common View";
 }
 
 <h1>Index</h1>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<p>Search Anything</p>
+@*<table class="table">
+    <tr>
+        <th>Question Id</th>
+        <th>Question title</th>
+        <th>Question desc</th>
+       
+        <th>Question date</th>
+        <th>Question created by </th>
+    </tr>
+    @foreach(Topic t in Model.topiclist)
+    {
+        <tr>
+            <td>@t.TopicId</td>
+            <td>@t.Title</td>
+            <td>@t.Description</td>
+            
+            <td>@t.PostDateTime</td>
+            <td>@t.CreatedBy</td>
+        </tr>
+    }
+</table>
+<table class="table">
+    <tr>
+        <th>Question Id</th>
+        <th>Comment Id</th>
+        <th>Comment </th>
+        <th>Commented By</th>
+        <th>Comment Date & Time</th>
+    </tr>
+    @foreach(Comment c in Model.commentlist)
+    {
+        <tr>
+            <td>@c.TopicId</td>
+            <td>@c.CommentId</td>
+            <td>@c.CommentDescription</td>
+            <td>@c.CommentedBy</td>
+            <td>@c.CommentDateTime</td>
+            
+        </tr>
+    }
+</table>
+<table class="table">
+    <tr>
+        <th>Comment Id</th>
+        <th>Reply Id</th>
+        <th>Reply </th>
+        <th>Replied By</th>
+        <th>Reply Date & Time</th>
+    </tr>
+    @foreach(Reply r in Model.replylist)
+    {
+        <tr>
+            <td>@r.CommentId</td>
+            <td>@r.ReplyId</td>
+            <td>@r.ReplyDescription</td>
+            <td>@r.RepliedBy</td>
+            <td>@r.ReplyDateTime</td>
+        </tr>
+    }
+</table>*@
+
+
+
+
+
+
+
+    <div class="container">
+        <h2>Discussion Forum</h2>
+        <p>Have a look at recent questions</p><br>
+        @foreach (Topic t in Model.topiclist)
+        {
+            <div class="media">
+                <div class="media-left">
+                    <img src="/images/people-logo.png" class="media-object" style="width:45px">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">@t.Title <small><i>Posted By :- @t.CreatedBy</i></small></h4>
+                    <p> @t.Description </p>
+                    @foreach(Comment c in Model.commentlist)
+                    {
+                        <div class="media">
+                            <div class="media-left">
+                                <img src="/images/comment.jpg" class="media-object" style="width:45px">
+                            </div>
+                            <p>Comments</p> 
+                            
+                            <div class="media-body">
+                                <h4 class="media-heading">@c.CommentDescription <small><i>Commented By :- @c.CommentedBy</i></small></h4>
+                                <p> @c.CommentDateTime </p>
+                                @foreach (Reply r in Model.replylist)
+                                {
+                                    <!-- Nested media object -->
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img src="/images/reply.png" class="media-object" style="width:45px">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">@r.ReplyDescription <small><i>Replied By :- @r.RepliedBy</i></small></h4>
+                                        <p> @r.ReplyDateTime </p>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+        
+                   
+
+
+
+
+@*<p>Search Anything</p>
 <input class="form-control" id="myInput" type="text" placeholder="Search...">
 <br>
 
@@ -45,4 +167,14 @@
             });
         });
     });
-</script>
+</script>*@
+
+
+@section MyView {
+    <style>
+            footer 
+            {
+                visibility: collapse;
+            }
+    </style>
+}
