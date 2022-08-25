@@ -5,16 +5,26 @@
 @inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Index";
+    int intSno = 0;
 }
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <h1>Index</h1>
 
-<p>
+
+<p>Search Any Comment</p>  
+  <input class="form-control" id="myInput" type="text" placeholder="Search...">
+  <br>
+
+
+
     <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
+            <th>S No.</th>
             <th>
                 @Html.DisplayNameFor(model => model.CommentDescription)
             </th>
@@ -28,33 +38,51 @@
             <th>@Html.DisplayName("Commented By")</th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CommentDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CommentDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Topic.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CommentId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CommentId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CommentId">Delete</a>
-            </td>
-            <td>
-                    @*@if (User.Identity.IsAuthenticated)
-                    {
-                        <div>@User.Identity.Name</div>
-                    }*@
-                    
-                @Html.DisplayFor(modelItem => item.CommentedBy)
-            </td>
+    <tbody id="myTable">
+        @foreach (var item in Model)
+        {
+
             
-        </tr>
-}
+            intSno = intSno + 1;
+
+            <tr>
+                <td>
+                    @intSno
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommentDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommentDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Topic.Description)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CommentId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CommentId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CommentId">Delete</a>
+                </td>
+                <td>
+                    @*@if (User.Identity.IsAuthenticated)
+                {
+                <div>@User.Identity.Name</div>
+                }*@
+
+                    @Html.DisplayFor(modelItem => item.CommentedBy)
+                </td>
+
+            </tr>
+        }
     </tbody>
 </table>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>

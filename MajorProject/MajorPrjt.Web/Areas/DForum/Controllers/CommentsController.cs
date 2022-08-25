@@ -28,6 +28,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             var applicationDbContext = _context.Comments.Include(c => c.Topic);
             return View(await applicationDbContext.ToListAsync());
         }
+        
 
         // GET: DForum/Comments/Details/5
         public async Task<IActionResult> Details(int? id)

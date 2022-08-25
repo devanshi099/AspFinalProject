@@ -28,6 +28,17 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             var applicationDbContext = _context.Replies.Include(r => r.Comment);
             return View(await applicationDbContext.ToListAsync());
         }
+        //public async Task<IActionResult> Index(string SearchString)
+        //{
+        //    ViewData["CurrentFilter"] = SearchString;
+        //    var replies = from r in _context.Replies
+        //                  select r;
+        //    if (!String.IsNullOrEmpty(SearchString))
+        //    {
+        //        replies = replies.Where(r => r.ReplyDescription.Contains(SearchString));
+        //    }
+        //    return View(replies);
+        //}
 
         // GET: DForum/Replies/Details/5
         public async Task<IActionResult> Details(int? id)
