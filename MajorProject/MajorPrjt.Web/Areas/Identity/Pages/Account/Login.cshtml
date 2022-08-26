@@ -5,8 +5,8 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
+<center><h1 style="color:white;">@ViewData["Title"]</h1>
+<div class="row justify-content-center text-light ">
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
@@ -35,11 +35,11 @@
                     <button type="submit" class="btn btn-primary">Log in</button>
                 </div>
                 <div class="form-group">
+                    @*<p>
+                        <a style="color:yellow;" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>*@
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        <a style="color:yellow;" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
                 </div>
             </form>
@@ -76,7 +76,7 @@
         </section>
     </div>*@
 </div>
-
+</center>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

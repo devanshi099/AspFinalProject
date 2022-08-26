@@ -1,15 +1,21 @@
 ﻿@model MajorPrjt.Web.Models.Reply
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Reply Details";
 }
 
-<h1>Details</h1>
+<h1></h1>
+<center><h2 style="color:#DC143C">@ViewData["Title"]</h2></center>
+<hr />
 
 <div>
-    <h4>Reply</h4>
-    <hr />
-    <dl class="row">
+    <dl class="row text-light border">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Comment.CommentDescription)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ReplyDescription)
         </dt>
@@ -22,15 +28,10 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ReplyDateTime)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Comment)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Comment.CommentDescription)
-        </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ReplyId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="text-center"> 
+    <b><a asp-action="Edit" asp-route-id="@Model.ReplyId" class="btn btn-warning" >Edit Details</a></b>|
+    <b><a style="color:white;" asp-action="Index" class="btn btn-danger" >View All Replies</a></b>
 </div>

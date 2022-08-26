@@ -4,14 +4,19 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+// Add the assembly attribute, to ensure that the Swagger generates the complete API Documentation.
+[assembly: ApiConventionType(typeof(DefaultApiConventions))]
 
 namespace MajorPrjt.Web
 {
@@ -65,6 +70,22 @@ namespace MajorPrjt.Web
                     options.Cookie.HttpOnly = true;
                     options.Cookie.Name = "LMSWebAppAppCookie";
                 });
+            // Register the MVC Middleware
+            // - NEEDED for Swagger Documentation Middleware 
+            // - NEEDED for the API support (if applicable)
+            services.AddMvc();
+
+            // Register the Swagger Documentation Generation Middleware Service
+            // URL: https://localhost:xxxx/swagger
+            services.AddSwaggerGen(config =>
+            {
+                config.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Dig In Dicussions",
+                    Description = "Discussion Forum"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +98,14 @@ namespace MajorPrjt.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                // Add the Swagger Middleware
+                app.UseSwagger();
+
+                // Add the Swagger Documentation Generation Middleware
+                app.UseSwaggerUI(config =>
+                {
+                    config.SwaggerEndpoint("/swagger/v1/swagger.json", "LMS Web API v1");
+                });
             }
             else
             {

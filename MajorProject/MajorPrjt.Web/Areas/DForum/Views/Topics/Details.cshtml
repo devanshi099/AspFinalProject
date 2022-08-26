@@ -1,15 +1,16 @@
 ﻿@model MajorPrjt.Web.Models.Topic
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Question Details";
 }
 
-<h1>Details</h1>
+<h1></h1>
+<center><h2 style="color:#DC143C">@ViewData["Title"]</h2></center>
+<hr />
 
 <div>
-    <h4>Topic</h4>
-    <hr />
-    <dl class="row">
+
+    <dl class="row text-light border">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -42,7 +43,8 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.TopicId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="text-center"> 
+    <b><a asp-action="Edit" asp-route-id="@Model.TopicId" class="btn btn-warning" >Edit Details</a></b>|
+    <b><a style="color:white;" asp-action="Index" class="btn btn-danger" >View All Questions</a></b>
 </div>

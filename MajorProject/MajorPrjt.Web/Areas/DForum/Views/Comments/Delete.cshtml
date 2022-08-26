@@ -1,16 +1,22 @@
 ﻿@model MajorPrjt.Web.Models.Comment
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Are you sure you want to delete this?";
 }
 
-<h1>Delete</h1>
+<h1></h1>
+<center><h2 style="color:#DC143C">@ViewData["Title"]</h2></center>
+<hr />
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Comment</h4>
     <hr />
-    <dl class="row">
+    <dl class="row text-light border">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Topic)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Topic.Description)
+        </dd class>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CommentDescription)
         </dt>
@@ -23,17 +29,13 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CommentDateTime)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Topic)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Topic.Description)
-        </dd class>
+        
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="CommentId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <b><a style="color:white;" asp-action="Index" class="btn btn-primary" >View all Comments </a></b>
     </form>
+    
 </div>

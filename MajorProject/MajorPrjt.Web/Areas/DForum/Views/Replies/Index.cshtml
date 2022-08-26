@@ -1,46 +1,46 @@
 ﻿@model IEnumerable<MajorPrjt.Web.Models.Reply>
 
-@{
-    ViewData["Title"] = "Index";
-    int intSno = 0;
-}
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<h1>Index</h1>
 
-<p>Search Any Comment</p>  
-<input class="form-control" id="myInput" type="text" placeholder="Search...">
-<br>
+@{
+    ViewData["Title"] = "Reply List";
+    int intSno = 0;
+}
+<style>
+    p a{
+        color:gold;
+    }
+</style>
 
-<!-- Search Questions-->
-@*<form asp-action="Index" method="get">
-    <div class="form-group">
-        <label for="SearchString">Search any comment</label>
-        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]"/>
-        <input type="submit" value="Search" class="btn btn-primary"/>
-    </div>
-</form>
-<a asp-action="Index">Back to Full List</a>
-<hr />*@
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<center><h3 style="color:#DC143C">@ViewData["Title"]</h3>
+<p> 
+    <b><a  asp-action="Create" class="btn btn-outline-warning" >Add a Reply</a></b>
+</p></center>
+<p style="color:white;">Search Any Reply</p>  
+  <input class="form-control" id="myInput" type="text" placeholder="Search...">
+  <br>
+<table class="table table-striped table-bordered table-hover table-warning">
     <thead>
         <tr>
             <th>S No.</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.ReplyDescription)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ReplyDateTime)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comment)
-            </th>
-            <th>@Html.DisplayName("Navigation Link's")</th>
             <th>@Html.DisplayName("Replied By")</th>
+            <th>@Html.DisplayName("Blog View")</th>
+            
         </tr>
     </thead>
     <tbody id="myTable">
@@ -52,23 +52,23 @@
                 <td>
                     @intSno
                 </td>
-
+                 <td>
+                    @Html.DisplayFor(modelItem => item.Comment.CommentDescription)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ReplyDescription)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ReplyDateTime)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comment.CommentDescription)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ReplyId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ReplyId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ReplyId">Delete</a>
-                </td>
+               
                 <td>
                     @Html.DisplayFor(modelItem => item.RepliedBy)
+                </td>
+                
+               <td >
+                    <b><a style="color:red;"  asp-area="user" asp-controller="forum" asp-action="Index" asp-route-id="@item.ReplyId">View</a> </b>
+               
                 </td>
             </tr>
         }
@@ -84,3 +84,11 @@ $(document).ready(function(){
   });
 });
 </script>
+@section MyView {
+    <style>
+        .navbar-brand
+        {
+            margin-top:-50px;
+        }
+    </style>
+}

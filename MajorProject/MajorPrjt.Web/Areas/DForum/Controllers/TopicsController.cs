@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MajorPrjt.Web.Areas.DForum.Controllers
 {
-    [Authorize]
+    
     [Area("DForum")]
     public class TopicsController : Controller
     {
@@ -22,14 +22,23 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             _context = context;
         }
 
+        
         // GET: DForum/Topics
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Topics.Include(t => t.Category);
             return View(await applicationDbContext.ToListAsync());
         }
-        
 
+        [Authorize(Roles = "AppAdmin")]
+        // GET: DForum/Topics
+        public async Task<IActionResult> AdminView()
+        {
+            var applicationDbContext = _context.Topics.Include(t => t.Category);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        [Authorize(Roles = "AppAdmin")]
         // GET: DForum/Topics/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -49,16 +58,23 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             return View(topic);
         }
 
+        [Authorize]
         // GET: DForum/Topics/Create
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
             return View();
         }
+        [Authorize]
+        public IActionResult UserView()
+        {
+            return View();
+        }
 
         // POST: DForum/Topics/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TopicId,Title,Description,IsAnswered,PostDateTime,CategoryId,CreatedBy")] Topic topic)
@@ -74,6 +90,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             return View(topic);
         }
 
+        [Authorize(Roles = "AppAdmin")]
         // GET: DForum/Topics/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -94,6 +111,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // POST: DForum/Topics/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "AppAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TopicId,Title,Description,IsAnswered,PostDateTime,CategoryId,CreatedBy")] Topic topic)
@@ -128,6 +146,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         }
 
         // GET: DForum/Topics/Delete/5
+        [Authorize(Roles = "AppAdmin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -149,6 +168,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // POST: DForum/Topics/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "AppAdmin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var topic = await _context.Topics.FindAsync(id);

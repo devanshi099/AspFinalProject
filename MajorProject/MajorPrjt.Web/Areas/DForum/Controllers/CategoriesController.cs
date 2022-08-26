@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MajorPrjt.Web.Areas.DForum.Controllers
 {
-    [Authorize]
+    
     [Area("DForum")]
     public class CategoriesController : Controller
     {
@@ -22,12 +22,20 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             _context = context;
         }
 
+        
         // GET: DForum/Categories
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categories.ToListAsync());
         }
 
+        [Authorize(Roles = "AppAdmin")]
+        public async Task<IActionResult> AdminView()
+        {
+            return View(await _context.Categories.ToListAsync());
+        }
+
+        [Authorize(Roles = "AppAdmin")]
         // GET: DForum/Categories/Details/5
         public async Task<IActionResult> Details(short? id)
         {
@@ -45,9 +53,16 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
 
             return View(category);
         }
-
+        [Authorize]
         // GET: DForum/Categories/Create
         public IActionResult Create()
+        {
+        
+                    return View();
+        }
+        [Authorize]
+        // GET: DForum/Categories/Create
+        public IActionResult UserView()
         {
             return View();
         }
@@ -56,18 +71,30 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Duplicate Entry Checking
+                bool isFound = _context.Categories.Any(c => c.CategoryName == category.CategoryName);
+                if (isFound)
+                {
+                    ModelState.AddModelError("CategoryName", "Already Existing!!!, Please add another category");
+                }
+                else
+                {
+                    _context.Add(category);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(category);
+            
         }
 
+        [Authorize(Roles = "AppAdmin")]
         // GET: DForum/Categories/Edit/5
         public async Task<IActionResult> Edit(short? id)
         {
@@ -84,6 +111,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             return View(category);
         }
 
+        [Authorize(Roles = "AppAdmin")]
         // POST: DForum/Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -98,27 +126,39 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                // Duplicate Entry Checking for all the remaining records)
+                bool isFound = await _context.Categories
+                    .AnyAsync(c => c.CategoryId != category.CategoryId
+                                   && c.CategoryName == category.CategoryName);
+                if (isFound)
                 {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
+                    ModelState.AddModelError("CategoryName", "Already Existing!!!, Please add another category");
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!CategoryExists(category.CategoryId))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(category);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!CategoryExists(category.CategoryId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
+        [Authorize(Roles = "AppAdmin")]
         // GET: DForum/Categories/Delete/5
         public async Task<IActionResult> Delete(short? id)
         {
@@ -137,6 +177,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             return View(category);
         }
 
+        [Authorize(Roles = "AppAdmin")]
         // POST: DForum/Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -1,5 +1,7 @@
 ﻿@model MajorPrjt.Web.Models.Category
-
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Add a New Category";
 }
@@ -14,14 +16,24 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
             <div class="form-group text-center font-weight-bold">
-                <span><label asp-for="CategoryName" class="control-label "></label>
+                <span><label asp-for="CategoryName" class="control-label text-light"></label>
                 <input asp-for="CategoryName" class="form-control" /></span>
                 <span asp-validation-for="CategoryName" class="text-danger"></span>
             </div>
             
             <div class="form-group text-center">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-                <b><a style="color:white;" asp-action="Index" class="btn btn-danger" >View Existing Categories</a></b>
+                
+                @if (User.IsInRole("AppAdmin"))
+                {
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                }
+                else
+                {
+                      <input type="submit" value="Submit" style="color:white;"  class="btn btn-danger"/>  
+
+                }
+                
+                @*<b><a style="color:white;" asp-action="Index" class="btn btn-danger" >View Existing Categories</a></b>*@
             </div>
         </form>
 

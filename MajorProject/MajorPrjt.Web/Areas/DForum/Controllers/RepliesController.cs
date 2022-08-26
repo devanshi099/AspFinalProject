@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MajorPrjt.Web.Areas.DForum.Controllers
 {
-    [Authorize]
+    
     [Area("DForum")]
     public class RepliesController : Controller
     {
@@ -22,8 +22,16 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             _context = context;
         }
 
+        
         // GET: DForum/Replies
         public async Task<IActionResult> Index()
+        {
+            var applicationDbContext = _context.Replies.Include(r => r.Comment);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        [Authorize(Roles = "AppAdmin")]
+        public async Task<IActionResult> AdminView()
         {
             var applicationDbContext = _context.Replies.Include(r => r.Comment);
             return View(await applicationDbContext.ToListAsync());
@@ -40,6 +48,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         //    return View(replies);
         //}
 
+        [Authorize(Roles = "AppAdmin")]
         // GET: DForum/Replies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -59,16 +68,23 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             return View(reply);
         }
 
+        [Authorize]
         // GET: DForum/Replies/Create
         public IActionResult Create()
         {
             ViewData["CommentId"] = new SelectList(_context.Comments, "CommentId", "CommentDescription","RepliedBy");
             return View();
         }
+        [Authorize]
+        public IActionResult UserView()
+        {
+            return View();
+        }
 
         // POST: DForum/Replies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReplyId,ReplyDescription,ReplyDateTime,CommentId", "RepliedBy")] Reply reply)
@@ -83,6 +99,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             return View(reply);
         }
 
+        [Authorize(Roles = "AppAdmin")]
         // GET: DForum/Replies/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -100,6 +117,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             return View(reply);
         }
 
+        [Authorize(Roles = "AppAdmin")]
         // POST: DForum/Replies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -136,6 +154,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             return View(reply);
         }
 
+        [Authorize(Roles = "AppAdmin")]
         // GET: DForum/Replies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -155,6 +174,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
             return View(reply);
         }
 
+        [Authorize(Roles = "AppAdmin")]
         // POST: DForum/Replies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

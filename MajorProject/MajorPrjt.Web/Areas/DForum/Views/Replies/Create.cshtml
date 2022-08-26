@@ -3,17 +3,20 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add New Reply";
 }
 
-<h1>Create</h1>
-
-<h4>Reply</h4>
+<h1></h1>
+<center><h2 style="color:#DC143C">@ViewData["Title"]</h2></center>
 <hr />
-<div class="row">
+<div class="row justify-content-center text-light">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CommentId" class="control-label"></label>
+                <select asp-for="CommentId" class ="form-control" asp-items="ViewBag.CommentId"></select>
+            </div>
             <div class="form-group">
                 <label asp-for="ReplyDescription" class="control-label"></label>
                 <input asp-for="ReplyDescription" class="form-control" />
@@ -24,10 +27,7 @@
                 <input asp-for="ReplyDateTime" class="form-control" />
                 <span asp-validation-for="ReplyDateTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CommentId" class="control-label"></label>
-                <select asp-for="CommentId" class ="form-control" asp-items="ViewBag.CommentId"></select>
-            </div>
+            
             @if (SignInManager.IsSignedIn(User))
             {
                 @Html.Hidden("RepliedBy", User.Identity.Name)
@@ -36,17 +36,20 @@
             {
                 @Html.Hidden("RepliedBy", "RepliedBy")
             }
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group text-center">
+                @if (User.IsInRole("AppAdmin"))
+                {
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                }
+                else
+                {
+                    <input type="submit" value="Submit" style="color:white;"  class="btn btn-danger"/> 
+                }
             </div>
+            
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

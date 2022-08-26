@@ -16,7 +16,7 @@ namespace MajorPrjt.Web.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Display(Name = "Topic ID")]
+        [Display(Name = "ID")]
         public int TopicId { get; set; }
 
 
@@ -38,11 +38,12 @@ namespace MajorPrjt.Web.Models
 
 
         [Required]
+        [Display(Name = "Date & Time")]
         [Column(TypeName = "datetime2")]
         public DateTime PostDateTime { get; set; }
 
 
-        [Display(Name = "Created By")]
+        [Display(Name = "Posted By")]
         public string CreatedBy { get; set; }
 
 

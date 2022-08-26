@@ -1,16 +1,15 @@
 ﻿@model MajorPrjt.Web.Models.Topic
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Are you sure you want to delete this?";
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
+<h1></h1>
+<center><h2 style="color:#DC143C">@ViewData["Title"]</h2></center>
+<hr />
 <div>
-    <h4>Topic</h4>
-    <hr />
-    <dl class="row">
+   
+    <dl class="row text-light border">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -43,9 +42,10 @@
         </dd class>
     </dl>
     
+    
     <form asp-action="Delete">
         <input type="hidden" asp-for="TopicId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <b><a style="color:white;" asp-action="Index" class="btn btn-primary" >View all Questions </a></b>
     </form>
 </div>

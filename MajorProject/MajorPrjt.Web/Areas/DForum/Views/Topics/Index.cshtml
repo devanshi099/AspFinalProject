@@ -2,24 +2,32 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@{
-    ViewData["Title"] = "Index";
-    int intSno = 0;
-}
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<h1>Index</h1>
 
-<p>Search Any Comment</p>  
-<input class="form-control" id="myInput" type="text" placeholder="Search...">
-<br>
+@{
+    ViewData["Title"] = "Question's List";
+    int intSno = 0;
+}
+<style>
+    p a{
+        color:gold;
+    }
+</style>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1></h1>
+<br />
+<center><h3 style="color:#DC143C">@ViewData["Title"]</h3>
+<p> 
+    <b><a  asp-action="Create" class="btn btn-outline-warning" >Add a Question</a></b>
+</p></center>
+<p style="color:white;">Search Any Question</p>  
+  <input class="form-control" id="myInput" type="text" placeholder="Search...">
+  <br>
 <!-- Table View-->
-<table class="table">
+<table class="table table-striped table-bordered table-hover table-warning">
     <thead>
         <tr>
             <th>S No.</th>
@@ -38,8 +46,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Category)
             </th>
-            <th>@Html.DisplayName("Navigation Link's")</th>
+            
             <th>@Html.DisplayName("Created By")</th>
+            <th>@Html.DisplayName("Comment to Post's")</th>
         </tr>
     </thead>
     <tbody id="myTable">
@@ -66,14 +75,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Category.CategoryName)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.TopicId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.TopicId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.TopicId">Delete</a>
-                </td>
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.CreatedBy)
                 </td>
+                
+               <td >
+                <b><a style="color:red;"  asp-area="dforum" asp-controller="comments" asp-action="create" asp-route-id="@item.TopicId">Comment</a> </b>
+               
+            </td>
             </tr>
         }
     </tbody>
@@ -88,3 +98,11 @@ $(document).ready(function(){
   });
 });
 </script>
+@section MyView {
+    <style>
+        .navbar-brand
+        {
+            margin-top:-50px;
+        }
+    </style>
+}

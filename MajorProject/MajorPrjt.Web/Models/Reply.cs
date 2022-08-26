@@ -9,7 +9,7 @@ namespace MajorPrjt.Web.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Display(Name = "Reply ID")]
+        [Display(Name = "ID")]
         public int ReplyId { get; set; }
 
 
@@ -21,6 +21,7 @@ namespace MajorPrjt.Web.Models
 
 
         [Required]
+        [Display(Name = "Date & Time")]
         [Column(TypeName = "datetime2")]
         public DateTime ReplyDateTime { get; set; }
 
@@ -30,7 +31,7 @@ namespace MajorPrjt.Web.Models
 
 
         #region Navigation Properties to Comment Model
-        [Display(Name = "Comment")]
+        [Display(Name = "Select Comment")]
         public int CommentId { get; set; }
 
         [ForeignKey(nameof(Reply.CommentId))]

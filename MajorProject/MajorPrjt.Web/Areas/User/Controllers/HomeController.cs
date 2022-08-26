@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MajorPrjt.Web.Data;
 using MajorPrjt.Web.Areas.User.ViewModels;
+using MajorPrjt.Web.Models;
 
 namespace MajorPrjt.Web.Areas.User.Controllers
 {
@@ -47,10 +48,6 @@ namespace MajorPrjt.Web.Areas.User.Controllers
 
 
 
-        public IActionResult CustomerView()
-        {
-
-            return RedirectToAction("Index");
-        }
+        
     }
 }

@@ -9,34 +9,48 @@
     @RenderSection("MyView", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Dig In Discussions</a>
+    <header style="background-color:#FC5E28;">
+        <nav style="background-color:#FC5E28;" class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow mb-3">
+            <div style="background-color:#FC5E28;" class="container">
+                <a class="navbar-brand " asp-area="" asp-page="/Index" ><img src="~/images/site-logo (2).png" style="width:280px;height:70px" ></a>
+               
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Manage</a>
+                        
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown" href="#">Manage</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" 
-                                   asp-area="DForum" asp-controller="Categories" asp-action="Index">Categories</a>
+                                   asp-area="user" asp-controller="Home" asp-action="Index">Ask a Question</a>
                                 <a class="dropdown-item"
-                                   asp-area="DForum" asp-controller="Topics" asp-action="Index">Questions</a>
-                                <a class="dropdown-item"
-                                   asp-area="DForum" asp-controller="Comments" asp-action="Index">Comments</a>
-                                   <a class="dropdown-item"
-                                   asp-area="DForum" asp-controller="Replies" asp-action="Index">Replies</a>
+                                   asp-area="user" asp-controller="Forum" asp-action="Index">Explore Recent Questions</a>  
                             </div>
+                        </li>
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown" href="#">Admin Panel</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" 
+                                   asp-area="DForum" asp-controller="Categories" asp-action="AdminView">Categories</a>
+                                <a class="dropdown-item"
+                                   asp-area="DForum" asp-controller="Topics" asp-action="AdminView">Questions</a>
+                                <a class="dropdown-item"
+                                   asp-area="DForum" asp-controller="Comments" asp-action="AdminView">Comments</a>
+                                   <a class="dropdown-item"
+                                   asp-area="DForum" asp-controller="Replies" asp-action="AdminView">Replies</a>
+                            </div>
+                        </li>
+                        <li class="nav-item text-light">
+                            <a class="nav-link text-light" href="/swagger">API Documentation</a>
                         </li>
                     </ul>
                 </div>

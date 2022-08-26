@@ -22,6 +22,8 @@ namespace MajorPrjt.Web.Areas.User.Controllers
             _context = context;
         }
 
+
+
         //public IActionResult Index()
         //{
 
@@ -38,6 +40,10 @@ namespace MajorPrjt.Web.Areas.User.Controllers
         //    List<CompleteForumView> x = commonview.ToList();
         //    return View(x);
         //}
+
+
+
+        // Displaying Multiple Models in Single View
         public ActionResult Index()
         {
             dynamic dy = new ExpandoObject();
@@ -47,18 +53,21 @@ namespace MajorPrjt.Web.Areas.User.Controllers
             return View(dy);
         }
 
+        // Fetching Topics Model Data
         public List<Topic> GetTopics()
         {
             List<Topic> topics = _context.Topics.ToList();
             return topics;
         }
 
-
+        // Fetching Comments Model Data
         public List<Comment> GetComments()
         {
             List<Comment> comments = _context.Comments.ToList();
             return comments;
         }
+
+        // Fetching Replies Model Data
         public List<Reply> GetReplies()
         {
             List<Reply> replies = _context.Replies.ToList();
