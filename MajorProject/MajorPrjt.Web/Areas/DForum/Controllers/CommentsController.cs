@@ -62,7 +62,7 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         public IActionResult Create()
         {
             ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Description");
-            return View();
+            return View(new Comment { CommentDateTime = DateTime.Now });
         }
         [Authorize]
         public IActionResult UserView()

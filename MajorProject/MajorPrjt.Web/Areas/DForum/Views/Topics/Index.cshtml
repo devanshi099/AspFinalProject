@@ -7,6 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+
 @{
     ViewData["Title"] = "Question's List";
     int intSno = 0;
@@ -69,8 +70,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.IsAnswered)
                 </td>
-                <td>
+                <td >
                     @Html.DisplayFor(modelItem => item.PostDateTime)
+                   
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Category.CategoryName)
@@ -98,6 +100,8 @@ $(document).ready(function(){
   });
 });
 </script>
+
+
 @section MyView {
     <style>
         .navbar-brand

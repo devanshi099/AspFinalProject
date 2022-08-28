@@ -39,8 +39,9 @@ namespace MajorPrjt.Web.Models
 
         [Required]
         [Display(Name = "Date & Time")]
-        [Column(TypeName = "datetime2")]
-        public DateTime PostDateTime { get; set; }
+       
+        public DateTime PostDateTime { get; set; } 
+
 
 
         [Display(Name = "Posted By")]

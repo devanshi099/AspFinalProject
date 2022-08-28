@@ -62,8 +62,9 @@ namespace MajorPrjt.Web.Areas.DForum.Controllers
         // GET: DForum/Topics/Create
         public IActionResult Create()
         {
+            
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
-            return View();
+            return View(new Topic { PostDateTime = DateTime.Now });
         }
         [Authorize]
         public IActionResult UserView()
